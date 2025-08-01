@@ -1,0 +1,27 @@
+import javax.script.*;
+
+public class ZeptoInJava {
+    public static void main(String[] args) throws Exception {
+        // Create JavaScript engine
+        ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+
+        // Minimal Zepto-like function (not full Zepto)
+        String zeptoSim = 
+            "var $ = function(selector) {" +
+            "  return {" +
+            "    text: function(newText) {" +
+            "      return 'Changed text of ' + selector + ' to: ' + newText;" +
+            "    }" +
+            "  };" +
+            "};" +
+
+            // Use it like Zepto:
+            "var result = $('#myElement').text('Hello from Zepto in Java');" +
+            "result;"; // return result to Java
+
+        // Evaluate the script
+        Object output = engine.eval(zeptoSim);
+
+        System.out.println(output);
+    }
+}
